@@ -215,15 +215,15 @@ Controller::Segment Controller::getNewHead() const
 
 void Controller::receive(std::unique_ptr<Event> e)
 {
-	if(e.getMessageId() == 0x20) {
-        handleTimePassed(EventT<TimeoutInd> const& (*e));
-    } else if(e.getMessageId() == 0x10) {
-            handleDirectionChange(EventT<DirectionInd> const& (*e));
-	} else if(e.getMessageId() == 0x40) {
-		handleFoodPositionChange(EventT<FoodInd> const& (*e));
-	} else if(e.getMessageId() == 0x42) {
-		handleNewFood(EventT<FoodResp> const& (*e));
-	} else (std::bad_cast&) {
+	if(e->getMessageId() == 0x20) {
+        handleTimePassed(EventT<TimeoutInd>& const e);
+    } else if(e->getMessageId() == 0x10) {
+            handleDirectionChange(EventT<DirectionInd>& const e);
+	} else if(e->getMessageId() == 0x40) {
+		handleFoodPositionChange(EventT<FoodInd>& const e);
+	} else if(e->getMessageId() == 0x42) {
+		handleNewFood(EventT<FoodResp>& const e);
+	} else {
 		throw UnexpectedEventException();
 	}
 }
