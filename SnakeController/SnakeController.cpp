@@ -216,13 +216,13 @@ Controller::Segment Controller::getNewHead() const
 void Controller::receive(std::unique_ptr<Event> e)
 {
 	if(e->getMessageId() == 0x20) {
-        handleTimePassed(EventT<TimeoutInd>& const e);
+        handleTimePassed(std::move(e));
     } else if(e->getMessageId() == 0x10) {
-            handleDirectionChange(EventT<DirectionInd>& const e);
+            handleDirectionChange(std::move(e));
 	} else if(e->getMessageId() == 0x40) {
-		handleFoodPositionChange(EventT<FoodInd>& const e);
+		handleFoodPositionChange(std::move(e));
 	} else if(e->getMessageId() == 0x42) {
-		handleNewFood(EventT<FoodResp>& const e);
+		handleNewFood(std::move(e));
 	} else {
 		throw UnexpectedEventException();
 	}
